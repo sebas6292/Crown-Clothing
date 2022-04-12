@@ -5,12 +5,8 @@ import Home from './routes/home/home.component';
 import Authentication from './routes/authentication/authentication.component';
 
 const Shop = () => {
-  return (
-    <div>
-      <h1>Shop page</h1>
-    </div>
-  )
-}
+  return <h1>Shop page</h1>;
+};
 
 const App = () => {
   return (
