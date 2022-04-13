@@ -10,11 +10,11 @@ import {
 } from 'firebase/auth'; // sets up the authentication 
 
 import {
-    getFirestore, 
+    getFirestore, //storage i believe
     doc, //retreives documents from out database
     getDoc, //get the data from the doc
     setDoc //set the data from the doc
-} from 'firebase/firestore';
+} from 'firebase/firestore'; // is a different service but very neat 
 
 const firebaseConfig = { // this allows you to make actions CRUD actions
     apiKey: "AIzaSyANnpUhJx7jUWcbev9VoporVMp8p2qrPfQ",

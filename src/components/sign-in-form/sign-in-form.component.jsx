@@ -25,7 +25,7 @@ const SignInForm = () => {
     };
 
     const signInWithGoogle = async () => {
-        const { user } = await signInWithGooglePopup();
+        const { user } = await signInWithGooglePopup(); // creates the access token 
         await createUserDocumentFromAuth(user);
     }
 
