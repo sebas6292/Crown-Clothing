@@ -8,14 +8,18 @@ import {
     createUserWithEmailAndPassword,
     signInWithEmailAndPassword,
     signOut, // helps you to sign out 
-    onAuthStateChanged
+    onAuthStateChanged,
 } from 'firebase/auth'; // sets up the authentication 
 
 import {
     getFirestore, //storage i believe
     doc, //retreives documents from out database
     getDoc, //get the data from the doc
-    setDoc //set the data from the doc
+    setDoc, //set the data from the doc
+    collection, 
+    writeBatch,
+    query, 
+    getDocs
 } from 'firebase/firestore'; // is a different service but very neat 
 
 const firebaseConfig = { // this allows you to make actions CRUD actions
@@ -44,6 +48,33 @@ export const signInWithGoogleRedirect = () =>
     signInWithRedirect(auth, googleProvider)
 
 export const db = getFirestore(); // create the database and directly points to the database 
+
+export const addCollectionAndDocuments = async (collectionKey, objectsToAdd) => {
+    const collectionRef = collection(db, collectionKey);
+    const batch = writeBatch(db);
+
+    objectsToAdd.forEach((object) => {
+        const docRef = doc(collectionRef, object.title.toLowerCase())
+        batch.set(docRef,object);
+    });
+
+    await batch.commit();
+    console.log('done')
+};
+
+export const getCategoriesAndDocuments = async () => {
+    const collectionRef = collection(db, 'categories');
+    const q = query(collectionRef);
+
+    const querySnapshot = await getDocs(q);
+    const categoryMap = querySnapshot.docs.reduceRight((acc, docSnapshot) => {
+        const { title, items } = docSnapshot.data();
+        acc[title.toLowerCase()] = items;
+        return acc;
+    }, {});
+
+    return categoryMap;
+}
 
 export const createUserDocumentFromAuth = async ( // grabbing the data and storing into firebase
     userAuth, 
