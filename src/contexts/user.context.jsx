@@ -1,18 +1,46 @@
-// this is a component that exclusively store things, in this case we are storing the user
 
-import { createContext, useState, useEffect } from 'react'; // createContext is a built in method from React
+import { createContext, useEffect, useReducer } from 'react'; 
 
 import { createUserDocumentFromAuth, onAuthStateChangedListener } from '../utils/firebase.utils'
 
-//as the actual value you want to access
-export const UserContext = createContext({ // the actual storage component 
-    currentUser: null, // the default value is what we want to pass through and access, actual object and should be null to see if its true or false 
-    setCurrentUser: () => null,
-})
 
-export const UserProvider = ({ children }) => { // the actual functional component 
-    const [currentUser, setCurrentUser] = useState(null);
-    const value = { currentUser, setCurrentUser }; // the object that is being passed. Super important. 
+export const UserContext = createContext({  
+    currentUser: null, 
+    setCurrentUser: () => null,
+}); 
+
+export const USER_ACTION_TYPES = {
+    SET_CURRENT_USER: 'SET_CURRENT_USER'
+}
+
+const userReducer = (state, action) => {
+    const { type, payload } = action;
+
+   switch(type) {
+       case USER_ACTION_TYPES.SET_CURRENT_USER: 
+            return {
+                ...state,
+                currentUser: payload
+            }
+       default: 
+            throw new Error(`Unhandled type ${type} in userReducer`)
+   }
+}
+
+const INITIAL_STATE = { 
+    currentUser: null
+}
+
+export const UserProvider = ({ children }) => { 
+    // const [currentUser, setCurrentUser] = useState(null);
+    const [{ currentUser }, dispatch ] = useReducer(userReducer, INITIAL_STATE);
+    console.log(currentUser);
+
+    const setCurrentUser = (user) => {
+        dispatch({ type: USER_ACTION_TYPES.SET_CURRENT_USER, payload: user });
+    }
+
+    const value = { currentUser, setCurrentUser };
 
     useEffect(() => {
         const unsubscribe = onAuthStateChangedListener((user) => {
@@ -22,9 +50,9 @@ export const UserProvider = ({ children }) => { // the actual functional compone
            setCurrentUser(user);
         })
 
-        return unsubscribe
+        return unsubscribe;
     },[])
 
     return <UserContext.Provider value={value}>{children}</UserContext.Provider> // wrap any other components is what provider is doing 
 }
-// holds the actual value!! 
+
