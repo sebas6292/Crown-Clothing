@@ -7,7 +7,7 @@ import {
     signInWithGooglePopup, 
     createUserDocumentFromAuth,
     signInAuthUserWithEmailAndPassword,
-} from '../../utils/firebase.utils';
+} from '../../utils/firebase/firebase.utils';
 
 import './sign-in-form.styles.scss';
 
