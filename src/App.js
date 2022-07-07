@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 
 import { 
   createUserDocumentFromAuth, 
-  onAuthStateChangedListener
+  onAuthStateChangedListener,
  } from './utils/firebase/firebase.utils';
 
 import { Routes, Route } from 'react-router-dom';
