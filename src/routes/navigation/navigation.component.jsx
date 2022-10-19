@@ -27,7 +27,7 @@ const Navigation = () => {
     <Fragment>
         <NavigationContainer>
             <LogoContainer to='/'>
-                 <CrownLogo />
+                 <CrownLogo className='logo'/>
             </LogoContainer>
             
             <NavLinks>
@@ -35,8 +35,7 @@ const Navigation = () => {
         
                 { currentUser ? (
                         <NavLink as='span' onClick={signOutUser}>
-                            {' '}
-                            SIGN OUT {' '}
+                            SIGN OUT
                             </NavLink>
                         ) : ( 
                         <NavLink to='/auth'>SIGN IN</NavLink>
