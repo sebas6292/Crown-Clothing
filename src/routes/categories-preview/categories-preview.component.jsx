@@ -9,6 +9,7 @@ import Spinner from '../../components/spinner/spinner.components';
 const CategoriesPreview = () => {
     const categoriesMap = useSelector(selectCategoriesMap);
     const isLoading = useSelector(selectCategoriesIsLoading)
+
     return (
         <Fragment>
             { isLoading ? (
@@ -21,7 +22,6 @@ const CategoriesPreview = () => {
                     )
                 })
             )}
-            
         </Fragment>
     )
 }

@@ -25,10 +25,8 @@ const Category = () => {
    return (
     <Fragment>
          <Title>{category.toUpperCase()}</Title>
-            { 
-                isLoading ? (
-            <Spinner />
-            ) : (
+
+            { isLoading ? ( <Spinner />) : (
             <CategoryContainer>
                 {products &&
                 products.map((product) => (
